@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>View User</title>
+</head>
+<body>
+
+<h1>View User</h1>
+<a th:href="@{/logout}">Logout</a>
+<br/><br/>
+<div th:if="user">
+    <table>
+        <tr>
+            <td>ID</td>
+            <td>:</td>
+            <td th:utext="${user.getId()}">...</td>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td>:</td>
+            <td th:utext="${user.getUsername()}">...</td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td>:</td>
+            <td th:utext="${user.getPassword()}">...</td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>:</td>
+            <td th:utext="${user.getFirstname() + ' ' + user.getLastname()}">...</td>
+        </tr>
+        <tr>
+            <td>Enabled status</td>
+            <td>:</td>
+            <td th:utext="${user.isEnabled()}">...</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>:</td>
+            <td th:utext="${user.getEmail()}">...</td>
+        </tr>
+        <tr>
+            <td>Role</td>
+            <td>:</td>
+            <td th:each="userRole : ${userRoles}" th:utext="${userRole.name}">...</td>
+        </tr>
+    </table>
+</div>
+
+<br/><br/>
+
+<div sec:authorize="hasRole('ADMIN')">
+    <a th:href="@{/admin/{id}/edit(id=${user.getId()})}">Edit</a>
+    <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
+        <input type="submit" value="Delete"/>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+<h2>User list</h2>
+<div>
+        <a th:href="@{/admin/create}">Add User</a> |
+        <a th:href="@{/}">Back to Index</a> |
+        <a th:href="@{/logout}">Logout</a>
+</div>
+<hr/>
+<div>
+    <table border="1">
+        <tr>
+            <th>id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Enabled status</th>
+            <th>Edit</th>
+        </tr>
+        <tr th:block th:each="user : ${users}">
+            <td><a th:href="@{/admin/{id}(id=${user.getId()})}" th:utext="${user.getId()}">...</a></td>
+            <td><a th:href="@{/admin/{id}(id=${user.getId()})}" th:utext="${user.getFirstname()} + ' ' + ${user.getLastname()}">...</a></td>
+            <td th:utext="${user.getEmail()}">...</td>
+            <td th:utext="${user.getUsername()}">...</td>
+            <td th:utext="${user.isEnabled()}">...</td>
+            <td><a th:href="@{/admin/{id}/edit(id=${user.getId()})}">Edit</a> </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
